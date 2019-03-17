@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { mapStyle } from "../data/mapStyle.js";
-import MapView from "../components/MapView";
 import scriptLoader from "react-async-script-loader";
+import PlaceList from "./PlaceList.js";
 
 const google = window.google;
 
@@ -9,6 +9,10 @@ class App extends Component {
   // eslint-disable-next-line no-useless-constructor
   constructor(props) {
     super(props);
+    this.state = {
+      listOn: true,
+      infoWindow: {}
+    };
   }
 
   componentWillReceiveProps({ isScriptLoaded, isScriptLoadedSucceed }) {
@@ -25,6 +29,15 @@ class App extends Component {
           gestureHandling: "greedy",
           mapTypeControl: false
         });
+
+        let marker = new google.maps.Marker({
+          map: map,
+          position: map.center,
+          animation: google.maps.Animation.DROP,
+          open: false
+        });
+
+        console.log(map);
       }
     } else {
       this.props.onError();
@@ -35,14 +48,12 @@ class App extends Component {
     return (
       <div className="container">
         <h1>Neighborhood Map</h1>
-        <section>
-          <div id="map" />
-        </section>
+        <section id="map" />
       </div>
     );
   }
 }
 
 export default scriptLoader([
-  "https://maps.googleapis.com/maps/api/js?key=AIzaSyA_vkGYxkHZ4P1gcvKbu62XwvCEO96fVSY&callback=initMap"
-])(MapView);
+  "https://maps.googleapis.com/maps/api/js?key=AIzaSyA_vkGYxkHZ4P1gcvKbu62XwvCEO96fVSY"
+])(App);
