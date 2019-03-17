@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import logo from "./logo.svg";
 import "./App.css";
+import MapView from "../components/MapView";
 
 class App extends Component {
   render() {
@@ -8,7 +8,7 @@ class App extends Component {
       <div className="container">
         <h1>Neighborhood Map</h1>
         <section>
-          <Map />
+          <MapView />
         </section>
       </div>
     );
