@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import { mapStyle } from "../data/mapStyle.js";
 import scriptLoader from "react-async-script-loader";
-import PlaceList from "./PlaceList.js";
+import PlaceList from "./PlacesList.js";
+import InfoWindow from './InfoWindow.js'
 
 const google = window.google;
 
