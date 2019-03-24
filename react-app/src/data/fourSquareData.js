@@ -18,16 +18,26 @@ const categoryId = categories.map(value => {
 });
 
 // create category key array
-const categoryName = categories.map(key => {
+export const categoryName = categories.map(key => {
   return key.key;
 });
 
-export const getFourSquareVenus = paulista => {
-  const urlRequest = `https://api.foursquare.com/v2/venues/search?ll=-23.560245,-46.657948&client_id=${clientId}&client_secret=${clientSecret}&categoryId=${categoryId}&radius=1650&limit=60`;
+const fourSquareUrl = "https://api.foursquare.com/v2/venues/";
+const versionDate = 20181212;
+
+export const getFourSquareVenues = centerMap => {
+  const urlRequest = `${fourSquareUrl}search?ll=${centerMap.lat},${
+    centerMap.long
+  }&client_id=${clientId}&client_secret=${clientSecret}&versionDate=${versionDate}&categoryId=${categoryId}&radius=1650&limit=60`;
   return fetch(urlRequest)
-    .then(response => response.json())
+    .then(response => {
+      return response.json();
+    })
     .then(data => {
-      const venues = data.response.venues;
+      const venues = data.response.venues.filter(
+        venue => venue.location.city && venue.location.address
+      );
       console.log(venues);
+      return venues;
     });
 };
